@@ -64,7 +64,8 @@ function CurrencyConverter() {
     const timer = setTimeout(() => {
       const rate = exchangeRates[fromCurrency][toCurrency];
       const convertedAmount = fromAmount * rate;
-      setToAmount(convertedAmount);
+      // Round to 3 decimal places
+      setToAmount(Math.round(convertedAmount * 1000) / 1000);
       setIsConverting(false);
     }, 300);
 
@@ -80,7 +81,8 @@ function CurrencyConverter() {
     // Reverse calculation
     const rate = exchangeRates[toCurrency][fromCurrency];
     const convertedAmount = amount * rate;
-    setFromAmount(convertedAmount);
+    // Round to 3 decimal places
+    setFromAmount(Math.round(convertedAmount * 1000) / 1000);
   };
 
   const handleSwapCurrencies = () => {

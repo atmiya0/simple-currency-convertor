@@ -13,7 +13,25 @@ function ConversionResult({
   const toCurrencyName = currencies.find(c => c.code === toCurrency)?.name || '';
 
   const formatAmount = (amount) => {
-    return amount.toFixed(2);
+    // Round to 3 decimal places if needed
+    const roundedAmount = Math.round(amount * 1000) / 1000;
+    
+    // Format with up to 3 decimal places, removing unnecessary trailing zeros
+    let formatted = roundedAmount.toFixed(3);
+    
+    // Remove trailing zeros after decimal point
+    if (formatted.includes('.')) {
+      formatted = formatted.replace(/\.?0+$/, '');
+    }
+    
+    // Ensure at least 2 decimal places for currency display
+    if (!formatted.includes('.')) {
+      formatted += '.00';
+    } else if (formatted.split('.')[1].length === 1) {
+      formatted += '0';
+    }
+    
+    return formatted;
   };
 
   return (

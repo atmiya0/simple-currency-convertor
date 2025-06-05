@@ -81,21 +81,22 @@ function CurrencyField({
   const formatAmount = (value) => {
     if (isEditing) return value.toString();
     
-    const formatted = value.toFixed(2);
-    const parts = formatted.split('.');
-    const integerPart = parts[0];
-    const decimalPart = parts[1];
+    // Round to 3 decimal places if needed
+    const roundedValue = Math.round(value * 1000) / 1000;
     
-    // Add light grey styling to trailing zeros or small decimal digits
-    if (decimalPart === '00') {
-      return `${integerPart}.00`;
+    // Format with up to 3 decimal places, removing unnecessary trailing zeros
+    let formatted = roundedValue.toFixed(3);
+    
+    // Remove trailing zeros after decimal point
+    if (formatted.includes('.')) {
+      formatted = formatted.replace(/\.?0+$/, '');
     }
     
-    // For the specific case of 73.859883, show 73.85 in black and 9883 in grey
-    if (value.toString().includes('73.85')) {
-      const fullString = value.toString();
-      const greyPart = fullString.substring(5); // Everything after "73.85"
-      return { main: '73.85', grey: greyPart };
+    // Ensure at least 2 decimal places for currency display
+    if (!formatted.includes('.')) {
+      formatted += '.00';
+    } else if (formatted.split('.')[1].length === 1) {
+      formatted += '0';
     }
     
     return formatted;
@@ -208,16 +209,7 @@ function CurrencyField({
                       <div className="skeleton-bar"></div>
                     </div>
                   ) : (
-                    <>
-                      {typeof formattedAmount === 'object' ? (
-                        <>
-                          <span>{formattedAmount.main}</span>
-                          <span className="amount-grey">{formattedAmount.grey}</span>
-                        </>
-                      ) : (
-                        formattedAmount
-                      )}
-                    </>
+                    formattedAmount
                   )}
                 </div>
               )}
