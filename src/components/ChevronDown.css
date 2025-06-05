@@ -1,0 +1,25 @@
+.chevron-down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+}
+
+.chevron-down svg {
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.chevron-down:hover svg {
+  transform: scale(1.1);
+}
+
+.chevron-down.open svg {
+  transform: rotate(180deg);
+}
+
+.chevron-down.open:hover svg {
+  transform: rotate(180deg) scale(1.1);
+} 

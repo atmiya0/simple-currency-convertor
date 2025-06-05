@@ -1,0 +1,111 @@
+.swap-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -7px 0;
+  z-index: 10;
+  position: relative;
+}
+
+.swap-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.swap-button:hover {
+  background: #f8f9fa;
+  border-color: var(--color-grey-200);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.swap-button:active {
+  transform: scale(0.95);
+}
+
+.swap-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(160, 165, 171, 0.3);
+}
+
+.swap-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.swap-icon {
+  color: var(--color-grey-200);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.swap-button:hover .swap-icon {
+  color: var(--color-black);
+  transform: rotate(180deg);
+}
+
+.swap-button.loading .swap-icon {
+  opacity: 0;
+}
+
+.loading-spinner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top: 2px solid var(--color-grey-200);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ripple effect */
+.swap-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(160, 165, 171, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.swap-button:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+@media (max-width: 768px) {
+  .swap-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .swap-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .loading-spinner {
+    width: 20px;
+    height: 20px;
+  }
+} 
